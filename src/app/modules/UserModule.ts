@@ -6,7 +6,7 @@ import { AuthModule } from './AuthModule';
 import { Favourite } from '../entities/Favourite';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Favourite]), forwardRef(() => AuthModule)],
+  imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
   providers: [UserService],
   exports: [UserService],
 })

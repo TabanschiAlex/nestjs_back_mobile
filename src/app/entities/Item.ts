@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BasicEntity } from './basic/BasicEntity';
-import { User } from './User';
 import { Product } from './Product';
+import { Order } from './Order';
 
-@Entity('carts')
-export class Cart extends BasicEntity {
-  @ManyToOne(() => User, (user) => user.cart)
-  @JoinColumn({ name: 'user_uuid' })
-  user: User;
+@Entity('items')
+export class Item extends BasicEntity {
+  @ManyToOne(() => Order, (order) => order.items)
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
 
   @ManyToOne(() => Product, (product) => product.cart)
   @JoinColumn({ name: 'product_id' })
