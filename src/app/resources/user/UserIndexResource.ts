@@ -12,7 +12,6 @@ export class UserIndexResource {
         uuid: user.uuid,
         email: user.email,
         name: user.name,
-        roles: user.roles,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       };

@@ -9,9 +9,8 @@ module.exports = {
   seeds: ['dist/database/seeds/*{.ts,.js}'],
   factories: ['dist/database/factories/*{.ts,.js}'],
   migrations: ['dist/database/migrations/*{.ts,.js}'],
-  /*subscribers: ["dist/app/subscribers/!**!/!*{.ts,.js}"],*/
   autoLoadEntities: true,
-  migrationsRun: true,
+  migrationsRun: false,
   synchronize: true,
   logging: false,
   cli: {

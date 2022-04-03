@@ -14,7 +14,6 @@ export class AuthResource {
       uuid: data.uuid,
       email: data.email,
       name: data.name,
-      roles: data.roles,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     };
