@@ -1,4 +1,10 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from '../services/AuthService';
 import { AuthResource } from '../resources/auth/AuthResource';
 import { AuthRegisterRequest } from '../requests/auth/AuthRegisterRequest';
@@ -12,17 +18,23 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  public async login(@Body(AuthLoginDTO) request: AuthLoginRequest): Promise<AuthResource> {
+  public async login(
+    @Body(AuthLoginDTO) request: AuthLoginRequest,
+  ): Promise<AuthResource> {
     return await this.authService.login(request);
   }
 
   @Post('register')
-  public async register(@Body(AuthRegisterDTO) request: AuthRegisterRequest): Promise<AuthResource> {
+  public async register(
+    @Body(AuthRegisterDTO) request: AuthRegisterRequest,
+  ): Promise<AuthResource> {
     return await this.authService.register(request);
   }
 
   @Post('forgot')
-  public async forgotPassword(@Body() request: { email: string }): Promise<boolean> {
+  public async forgotPassword(
+    @Body() request: { email: string },
+  ): Promise<boolean> {
     return await this.authService.forgotPassword(request.email);
   }
 }

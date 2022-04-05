@@ -9,6 +9,7 @@ import { FavouriteModule } from './FavouriteModule';
 import { OrderModule } from './OrderModule';
 import { ProductModule } from './ProductModule';
 import { UserModule } from './UserModule';
+import { ItemModule } from './ItemModule';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { UserModule } from './UserModule';
     FavouriteModule,
     OrderModule,
     ProductModule,
-    UserModule
+    UserModule,
+    ItemModule,
   ],
   providers: [
     {

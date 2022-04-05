@@ -10,4 +10,3 @@ export class AuthLoginRequest implements BasicRequest {
   @IsString()
   readonly password: string;
 }
-

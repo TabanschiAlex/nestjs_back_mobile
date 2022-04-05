@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cart } from '../entities/Cart';
@@ -25,6 +29,7 @@ export class CartService {
     }
   }
 
+  // todo save by user uuid
   public async save(cartRequest: CartRequest, req: Request): Promise<any> {
     try {
       return await this.cartRepository.save(cartRequest);
@@ -33,7 +38,10 @@ export class CartService {
     }
   }
 
-  public async update(id: string, productDTO: QueryDeepPartialEntity<Cart>): Promise<any> {
+  public async update(
+    id: string,
+    productDTO: QueryDeepPartialEntity<Cart>,
+  ): Promise<any> {
     try {
       return await this.cartRepository.update(id, productDTO);
     } catch (e) {

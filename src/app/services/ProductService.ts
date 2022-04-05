@@ -1,9 +1,12 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from '../entities/Product';
 import { ProductRequest } from '../requests/product/ProductRequest';
-import { BasicQueryRequest } from '../requests/BasicQueryRequest';
 
 @Injectable()
 export class ProductService {
@@ -12,7 +15,7 @@ export class ProductService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  public async getAll(query: BasicQueryRequest): Promise<Product[]> {
+  public async getAll(): Promise<Product[]> {
     return await this.productRepository.find();
   }
 
@@ -26,7 +29,6 @@ export class ProductService {
 
   public async save(productDTO: ProductRequest): Promise<any> {
     try {
-      //@ts-ignore
       return await this.productRepository.save(productDTO);
     } catch (e) {
       throw new UnprocessableEntityException();
@@ -35,7 +37,6 @@ export class ProductService {
 
   public async update(id: string, productDTO: ProductRequest): Promise<any> {
     try {
-      // @ts-ignore
       return await this.productRepository.update(id, productDTO);
     } catch (e) {
       throw new UnprocessableEntityException();

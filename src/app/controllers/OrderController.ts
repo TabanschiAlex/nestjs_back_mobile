@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Post, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/JwtAuthGuard';
-import { Response } from 'express';
-import { BasicRequest } from '../requests/BasicRequest';
 import { OrderService } from '../services/OrderService';
+import { OrderRequest } from '../requests/order/OrderRequest';
 
 @Controller('orders')
 @UseGuards(JwtAuthGuard)
@@ -16,7 +24,7 @@ export class OrderController {
   }
 
   @Post()
-  public async store(@Body() request: BasicRequest, @Res() res: Response) {
-    return this.orderService.create(request);
+  public async store(@Body() body: OrderRequest, @Req() req) {
+    return this.orderService.create(body.items, req);
   }
 }
