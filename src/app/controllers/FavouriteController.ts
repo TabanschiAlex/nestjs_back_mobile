@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FavouriteService } from '../services/FavouriteService';
 import { JwtAuthGuard } from '../guards/JwtAuthGuard';
 
@@ -20,8 +9,8 @@ export class FavouriteController {
   constructor(private readonly favouriteService: FavouriteService) {}
 
   @Get()
-  public async getFavourites() {
-    return this.favouriteService.getAll();
+  public async getFavourites(@Req() req) {
+    return await this.favouriteService.getAll(req);
   }
 
   @Post()
@@ -30,7 +19,7 @@ export class FavouriteController {
   }
 
   @Delete()
-  public async deleteFavourite(@Param('id') id: string) {
+  public async deleteFavourite(@Body('id') id: string) {
     return this.favouriteService.delete(id);
   }
 }

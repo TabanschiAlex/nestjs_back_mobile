@@ -23,8 +23,8 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Get()
-  public async getItems() {
-    return this.cartService.getAll();
+  public async getItems(@Req() req) {
+    return this.cartService.getAll(req);
   }
 
   @Post()
@@ -33,15 +33,12 @@ export class CartController {
   }
 
   @Patch()
-  public async updateQuantity(
-    @Param('id') id: string,
-    @Body() quantity: number,
-  ) {
+  public async updateQuantity(@Param('id') id: string, @Body() quantity: number) {
     return this.cartService.update(id, { quantity: quantity });
   }
 
   @Delete()
-  public async deleteItem(@Param('id') id: string) {
+  public async deleteItem(@Body('id') id: string) {
     return this.cartService.delete(id);
   }
 }

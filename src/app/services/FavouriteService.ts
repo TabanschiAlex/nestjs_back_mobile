@@ -16,8 +16,14 @@ export class FavouriteService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  public async getAll(): Promise<Favourite[]> {
-    return await this.favouriteRepository.find();
+  public async getAll(req): Promise<Product[]> {
+    const favourites = await this.favouriteRepository.find({
+      where: { user: req.user.uuid },
+      loadEagerRelations: true,
+      relations: ['product'],
+    });
+
+    return favourites.map((value) => value.product);
   }
 
   public async add(product_id: string, req): Promise<any> {
@@ -26,7 +32,9 @@ export class FavouriteService {
     favourite.user = await this.userRepository.findOneOrFail(req.user.uuid);
     favourite.product = await this.productRepository.findOneOrFail(product_id);
 
-    return await this.favouriteRepository.save(favourite);
+    await this.favouriteRepository.save(favourite);
+
+    return true;
   }
 
   public async delete(id: string): Promise<any> {

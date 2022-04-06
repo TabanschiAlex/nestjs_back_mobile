@@ -9,11 +9,7 @@ import { ItemModule } from './ItemModule';
 import { AuthModule } from './AuthModule';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Order, User, Item]),
-    forwardRef(() => ItemModule),
-    forwardRef(() => AuthModule),
-  ],
+  imports: [TypeOrmModule.forFeature([Order, User, Item]), forwardRef(() => ItemModule), forwardRef(() => AuthModule)],
   controllers: [OrderController],
   providers: [OrderService],
 })

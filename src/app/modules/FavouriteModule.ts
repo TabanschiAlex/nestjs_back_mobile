@@ -8,10 +8,7 @@ import { Product } from '../entities/Product';
 import { AuthModule } from './AuthModule';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Favourite, User, Product]),
-    forwardRef(() => AuthModule),
-  ],
+  imports: [TypeOrmModule.forFeature([Favourite, User, Product]), forwardRef(() => AuthModule)],
   controllers: [FavouriteController],
   providers: [FavouriteService],
 })

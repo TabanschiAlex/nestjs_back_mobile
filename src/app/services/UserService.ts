@@ -7,9 +7,7 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   public async storeUser(request: CreateUserRequest): Promise<User> {
     try {
@@ -19,10 +17,7 @@ export class UserService {
     }
   }
 
-  public async updateUser(
-    uuid: string,
-    request: QueryDeepPartialEntity<User>,
-  ): Promise<UpdateResult> {
+  public async updateUser(uuid: string, request: QueryDeepPartialEntity<User>): Promise<UpdateResult> {
     try {
       return await this.userRepository.update({ uuid: uuid }, request);
     } catch (e) {

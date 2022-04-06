@@ -15,8 +15,8 @@ export class OrderService {
     private readonly itemService: ItemService,
   ) {}
 
-  public async getAll(): Promise<Order[]> {
-    return await this.orderRepository.find();
+  public async getAll(req): Promise<Order[]> {
+    return await this.orderRepository.find({ where: { user: req.user.uuid } });
   }
 
   public async getOne(id: string) {
@@ -32,6 +32,8 @@ export class OrderService {
     const createdItems = await this.itemService.storeItems(items, saved.id);
     saved.total_price = createdItems.reduce((acc, value) => acc + value);
 
-    return await this.orderRepository.save(saved);
+    await this.orderRepository.save(saved);
+
+    return true;
   }
 }

@@ -1,7 +1,7 @@
-import { IsArray, IsEmpty } from 'class-validator';
+import { IsArray, IsNotEmpty } from 'class-validator';
 
 export class OrderRequest {
   @IsArray()
-  @IsEmpty()
-  readonly items: number[];
+  @IsNotEmpty()
+  readonly items: any[];
 }

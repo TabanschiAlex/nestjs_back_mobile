@@ -22,10 +22,8 @@ export class ItemService {
     for (const item of items) {
       const newItem = new Item();
 
-      newItem.product = await this.productRepository.findOneOrFail(
-        item.product_id,
-      );
-      newItem.quantity = item.quantity;
+      newItem.product = await this.productRepository.findOneOrFail(item.product_id);
+      newItem.quantity = item?.quantity ?? 1;
       newItem.order = await this.orderRepository.findOneOrFail(orderId);
       newItem.total_price = newItem.product.price * newItem.quantity;
 

@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/JwtAuthGuard';
 import { OrderService } from '../services/OrderService';
 import { OrderRequest } from '../requests/order/OrderRequest';
@@ -19,8 +10,8 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
-  public async getOrders() {
-    return this.orderService.getAll();
+  public async getOrders(@Req() req) {
+    return this.orderService.getAll(req);
   }
 
   @Post()

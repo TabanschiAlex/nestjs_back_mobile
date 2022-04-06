@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../entities/User';
@@ -13,10 +9,7 @@ import { AuthResource } from '../resources/auth/AuthResource';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
   public async login(request: AuthLoginRequest): Promise<AuthResource> {
     return this.generateToken(await this.validateUser(request));
@@ -27,10 +20,7 @@ export class AuthService {
       throw new UnprocessableEntityException('Already exists!');
     }
 
-    AuthService.checkPasswordsIdentity(
-      request.password,
-      request.passwordConfirmation,
-    );
+    AuthService.checkPasswordsIdentity(request.password, request.passwordConfirmation);
 
     const hashedPassword = await AuthService.hashPassword(request.password);
     const user = await this.userService.storeUser({
@@ -41,19 +31,20 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  public async forgotPassword(email: string): Promise<boolean> {
+  public async forgotPassword(email: string): Promise<string> {
     const user = await this.userService.getUserByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
     user.password = await AuthService.hashPassword('12345689');
     await this.userService.updateUser(user.uuid, user);
 
-    return true;
+    return 'new password 123456789';
   }
 
-  private static checkPasswordsIdentity(
-    password: string,
-    passwordConfirmation: string,
-  ): void {
+  private static checkPasswordsIdentity(password: string, passwordConfirmation: string): void {
     if (password !== passwordConfirmation) {
       throw new UnprocessableEntityException('Not Match!');
     }
