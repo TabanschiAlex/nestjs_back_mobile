@@ -29,7 +29,7 @@ export class CartService {
     });
 
     if (inCart) {
-      inCart.quantity += 1;
+      inCart.quantity += cartRequest?.quantity ?? 1;
       inCart.total_price = inCart.quantity * inCart.product.price;
       await this.cartRepository.save(inCart);
 
