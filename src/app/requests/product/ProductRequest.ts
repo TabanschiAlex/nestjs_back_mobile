@@ -20,5 +20,5 @@ export class ProductRequest {
   readonly manufacturer_id: number;
 
   @IsArray()
-  readonly images: Express.Multer.File[];
+  readonly images: string[];
 }

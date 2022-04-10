@@ -13,9 +13,12 @@ export class Product extends BasicEntity {
   @Column({ type: 'decimal', unsigned: true, precision: 8, scale: 2 })
   price: number;
 
+  @Column({ type: 'json', nullable: true })
+  images: string[];
+
   @OneToMany(() => Cart, (cart) => cart.user)
   cart: Cart[];
 
-  /*@OneToMany(() => Cart, (cart) => cart.user)
-  favourites: Cart[];*/
+  @OneToMany(() => Cart, (cart) => cart.user)
+  favourites: Cart[];
 }

@@ -19,7 +19,7 @@ export class CartService {
   ) {}
 
   public async getAll(req): Promise<Cart[]> {
-    return await this.cartRepository.find({ where: { user: req.user.uuid } });
+    return await this.cartRepository.find({ where: { user: req.user.uuid }, relations: ['product'] });
   }
 
   public async save(cartRequest: CartRequest, req): Promise<any> {
