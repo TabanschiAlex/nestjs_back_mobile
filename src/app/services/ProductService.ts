@@ -9,10 +9,17 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-  ) {}
+  ) {
+  }
 
-  public async getAll(): Promise<Product[]> {
-    return await this.productRepository.find();
+  public async getAll(req): Promise<Product[]> {
+    const products = await this.productRepository.query(`select products.*, if(f.id is not null, true, false) as isFavourite\n` +
+      `from products\n` +
+      `    left join favourites f on products.id = f.product_id and user_uuid = '${req.user.uuid}';`);
+
+    products.forEach((el) => el.images = JSON.parse(el.images));
+
+    return products;
   }
 
   public async getOne(id: string) {
