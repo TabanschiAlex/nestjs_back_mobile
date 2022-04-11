@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Order } from '../entities/Order';
 import { User } from '../entities/User';
 import { ItemService } from './ItemService';
+import { Cart } from '../entities/Cart';
 
 @Injectable()
 export class OrderService {
@@ -12,6 +13,8 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Cart)
+    private readonly cartRepository: Repository<Cart>,
     private readonly itemService: ItemService,
   ) {}
 
@@ -33,6 +36,8 @@ export class OrderService {
     saved.total_price = createdItems.reduce((acc, value) => acc + value);
 
     await this.orderRepository.save(saved);
+
+    await this.cartRepository.delete({ user: req.user.uuid });
 
     return true;
   }

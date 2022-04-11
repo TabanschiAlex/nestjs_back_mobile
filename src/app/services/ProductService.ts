@@ -13,7 +13,7 @@ export class ProductService {
   }
 
   public async getAll(req): Promise<Product[]> {
-    const products = await this.productRepository.query(`select products.*, if(f.id is not null, true, false) as isFavourite\n` +
+    const products = await this.productRepository.query(`select distinct products.*, if(f.id is not null, true, false) as isFavourite\n` +
       `from products\n` +
       `    left join favourites f on products.id = f.product_id and user_uuid = '${req.user.uuid}';`);
 

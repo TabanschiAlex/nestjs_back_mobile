@@ -7,9 +7,14 @@ import { User } from '../entities/User';
 import { Item } from '../entities/Item';
 import { ItemModule } from './ItemModule';
 import { AuthModule } from './AuthModule';
+import { Cart } from '../entities/Cart';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, User, Item]), forwardRef(() => ItemModule), forwardRef(() => AuthModule)],
+  imports: [
+    TypeOrmModule.forFeature([Order, User, Item, Cart]),
+    forwardRef(() => ItemModule),
+    forwardRef(() => AuthModule),
+  ],
   controllers: [OrderController],
   providers: [OrderService],
 })

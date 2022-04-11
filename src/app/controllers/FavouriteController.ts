@@ -19,7 +19,7 @@ export class FavouriteController {
   }
 
   @Delete()
-  public async deleteFavourite(@Body('id') id: string) {
-    return this.favouriteService.delete(id);
+  public async deleteFavourite(@Body('product_id') product_id: string, @Req() req) {
+    return this.favouriteService.delete(product_id, req);
   }
 }
